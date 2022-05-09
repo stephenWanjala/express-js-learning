@@ -1,8 +1,8 @@
 const express = require('express');
-const path = require('path');
+const path = require('path')
 const exphbs=require('express-handlebars')
 const logger = require('./Middlewre/Logger');
-
+const members=require('./Members')
 const app=express()
 const PORT=process.env.PORT ||5000
 
@@ -18,8 +18,10 @@ const PORT=process.env.PORT ||5000
 app.engine('handlebars', exphbs.engine({defaultLayout:'main'}))
 app.set('view engine', 'handlebars')
 // home page route
-app.get('/',(req,res)=> res.render(('index'))
-)
+app.get('/',(req,res)=> res.render(('index'),{
+    tittle:'Member App',
+    members
+}))
 // body parser middleware function
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
