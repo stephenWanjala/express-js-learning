@@ -1,5 +1,6 @@
 
-const express=require('express')
+const express=require('express');
+const { route } = require('express/lib/application');
 const uuid = require('uuid');
 const router =express.Router()
 const members=require('../../Members')
@@ -54,6 +55,18 @@ router.put('/:id',(req,res)=>{
         })
     } else{
         res.status(400).json({message:`No member with an id of ${req.params.id}`})
+    }
+})
+// delete a member
+
+router.delete('/:id',(req,res)=>{
+    const found=members.some(member=>member.id===parseInt(req.params.id))
+    if(found){
+      res.json({msg:"member deleted",
+        members:members.filter(member=>
+            member.id!=parseInt(req.params.id))})  
+    } else{
+        res.status(400).json({message:`No member with the id of ${req.params.id}`})
     }
 })
 module.exports= router
